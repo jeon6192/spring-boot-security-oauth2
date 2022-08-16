@@ -28,14 +28,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-	private static final String[] PATHS = {"/auth/**", "/oauth2/**", "/h2-console/**"};
+	private static final String[] PATHS = {"/auth/**", "/oauth2/**", "/login/**", "/h2-console/**"};
 
 	private final AppProperties appProperties;
 	private final AuthTokenProvider authTokenProvider;
@@ -75,10 +72,10 @@ public class SecurityConfig {
 					authRequest.anyRequest().authenticated();
 				})
 				.oauth2Login()
-				.authorizationEndpoint().baseUri("/oauth2/authorize")
+				.authorizationEndpoint().baseUri("/oauth2/authorization")
 				.authorizationRequestRepository(oAuth2AuthorizationRequestRepository)
 				.and()
-				.redirectionEndpoint().baseUri("/oauth2/code/*")
+				.redirectionEndpoint().baseUri("/*/oauth2/code/*")
 				.and()
 				.userInfoEndpoint().userService(customOAuth2UserService)
 				.and()

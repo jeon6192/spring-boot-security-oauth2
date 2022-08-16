@@ -1,5 +1,6 @@
 package com.example.springbootoauth2.controller;
 
+import com.example.springbootoauth2.mapper.UserMapper;
 import com.example.springbootoauth2.model.entity.User;
 import com.example.springbootoauth2.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class UserController {
         User user = userService.getUserByUserId(principal.getUsername());
 
         Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("user", user);
+        responseMap.put("user", UserMapper.INSTANCE.toDto(user));
 
         return ok(responseMap);
     }

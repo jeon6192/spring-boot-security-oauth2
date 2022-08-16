@@ -30,28 +30,28 @@ class App extends Component {
   }
 
   loadCurrentlyLoggedInUser() {
-    getCurrentUser()
-    .then(response => {
+        getCurrentUser()
+            .then(response => {
       this.setState({
         currentUser: response.user,
         authenticated: true,
         loading: false
       });
-    }).catch(error => {
+            }).catch(error => {
       this.setState({
         loading: false
       });  
-    });    
-  }
-
+            });
+    }
+    
   handleLogout() {
-    localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(ACCESS_TOKEN);
     this.setState({
       authenticated: false,
       currentUser: null
     });
-    Alert.success("You're safely logged out!");
-  }
+        Alert.success("You're safely logged out!");
+    }
 
   componentDidMount() {
     this.loadCurrentlyLoggedInUser();
@@ -59,31 +59,31 @@ class App extends Component {
 
   render() {
     if(this.state.loading) {
-      return <LoadingIndicator />
+        return <LoadingIndicator />
     }
 
     return (
-      <div className="app">
-        <div className="app-top-box">
+        <div className="app">
+            <div className="app-top-box">
           <AppHeader authenticated={this.state.authenticated} onLogout={this.handleLogout} />
-        </div>
-        <div className="app-body">
-          <Switch>
-            <Route exact path="/" component={Home}></Route>           
+            </div>
+            <div className="app-body">
+                <Switch>
+                    <Route exact path="/" component={Home}></Route>
             <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
-              component={Profile}></PrivateRoute>
-            <Route path="/login"
+                        component={Profile}></PrivateRoute>
+                    <Route path="/login"
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
-            <Route path="/signup"
+                    <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>  
-            <Route component={NotFound}></Route>
-          </Switch>
-        </div>
+                    <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+                    <Route component={NotFound}></Route>
+                </Switch>
+            </div>
         <Alert stack={{limit: 3}} 
           timeout = {3000}
-          position='top-right' effect='slide' offset={65} />
-      </div>
+                position='top-right' effect='slide' offset={65} />
+        </div>
     );
   }
 }

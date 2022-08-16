@@ -25,7 +25,7 @@ public class NaverOAuth2UserInfo extends OAuth2UserInfo {
 
         if (response == null) return null;
 
-        return String.valueOf(response.get("id"));
+        return String.valueOf(response.get("nickname"));
     }
 
     @Override
